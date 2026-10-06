@@ -107,21 +107,16 @@ export default function QuizPage() {
         <section className="quiz-card">
           <div className="quiz-card-top">
             <span className="quiz-heart"><HeartIcon filled size={28} /></span>
-            <p className="eyebrow">A playful little question</p>
-            <h1>{quiz.creatorDisplayName ? `${quiz.creatorDisplayName} wants to know…` : 'Someone wants to know…'}</h1>
             <p className="quiz-question">How much does your crush love you?</p>
-            <p className="quiz-subtitle">Enter the names below for a fun, made-up match percentage.</p>
           </div>
           <form className="quiz-form" onSubmit={handleSubmit} noValidate>
             <div className="field"><label htmlFor="visitor-name">Your name</label><input id="visitor-name" value={visitorName} onChange={(event) => setVisitorName(event.target.value)} maxLength="60" autoComplete="name" placeholder="Enter your name" /></div>
             <div className="heart-divider"><span /><HeartIcon filled size={17} /><span /></div>
             <div className="field"><label htmlFor="crush-name">Your crush’s name</label><input id="crush-name" value={crushName} onChange={(event) => setCrushName(event.target.value)} maxLength="60" autoComplete="off" placeholder="Enter their name" /></div>
 
-            <div className="disclosure"><span aria-hidden="true">i</span><p><strong>Before you continue</strong>Your name and your crush’s name will be visible to the person who created this link.</p></div>
-            <label className="consent-row"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /><span className="custom-check" /><span>I agree to share these names with this link’s creator.</span></label>
+            <label className="consent-row compact-consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /><span className="custom-check" /><span>I understand these names and my result will be shared with the link’s creator.</span></label>
             {formError && <p className="form-error" role="alert">{formError}</p>}
             <button className="btn btn-primary btn-full btn-large" disabled={submitting}>{submitting ? <><span className="button-spinner" /> Saving your answer…</> : <>Reveal my result <HeartIcon filled size={18} /></>}</button>
-            <p className="entertainment-note">Just for fun — this cannot measure someone’s feelings.</p>
           </form>
         </section>
       ) : (
@@ -134,7 +129,7 @@ export default function QuizPage() {
             </div>
             <h1>{result.message}</h1>
             <p className="name-pair"><strong>{visitorName.trim()}</strong><HeartIcon filled size={17} /><strong>{crushName.trim()}</strong></p>
-            <p className="result-disclaimer">{result.disclaimer}</p>
+            <p className="result-disclaimer">Entertainment only</p>
             <div className="sender-knows-notice" role="status">
               <span aria-hidden="true">😄</span>
               <p><strong>Ahaa! {quiz.creatorDisplayName || 'The sender'} knows who your crush is now.</strong>Your names and this result are now in their private dashboard.</p>
