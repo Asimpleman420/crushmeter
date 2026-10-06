@@ -170,6 +170,7 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
 .heart-divider span:last-child { background: linear-gradient(90deg, rgba(196,58,104,.18), transparent); }
 .consent-row { position: relative; margin-bottom: 18px; display: grid; grid-template-columns: 20px 1fr; align-items: start; gap: 10px; cursor: pointer; color: #5d4758; font-size: .78rem; line-height: 1.5; }
 .compact-consent { margin-top: 22px; }
+.compact-consent strong { color: var(--plum); }
 .consent-row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .custom-check { width: 20px; height: 20px; margin-top: 1px; display: grid; place-items: center; border: 1.5px solid #ac93a8; border-radius: 6px; background: white; }
 .consent-row input:checked + .custom-check { border-color: var(--berry); background: var(--berry); }
