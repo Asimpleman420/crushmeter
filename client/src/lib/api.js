@@ -1,11 +1,15 @@
-const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+const configuredApiOrigin = import.meta.env.VITE_API_URL?.trim()
+const developmentFallback = import.meta.env.DEV ? 'http://localhost:5000' : ''
+const API_ORIGIN = (configuredApiOrigin || developmentFallback)
+  .replace(/\/+$/, '')
+  .replace(/\/api$/, '')
 
 async function request(path, options = {}) {
-  if (!API_URL) {
+  if (!API_ORIGIN) {
     throw new Error('The API URL is not configured. Set VITE_API_URL and rebuild the frontend.')
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${API_ORIGIN}${path}`, {
     ...options,
     headers: {
       ...(options.body ? { 'Content-Type': 'application/json' } : {}),
