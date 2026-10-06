@@ -21,7 +21,8 @@ function appUrl() {
     try {
       const url = new URL(configured);
       if (!['http:', 'https:'].includes(url.protocol)) return null;
-      if (process.env.NODE_ENV === 'production' && url.protocol !== 'https:') return null;
+      const isLocalhost = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
+      if (process.env.NODE_ENV === 'production' && url.protocol !== 'https:' && !isLocalhost) return null;
       return url.origin;
     } catch {
       return null;
