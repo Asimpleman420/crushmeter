@@ -76,6 +76,10 @@ export default function QuizPage() {
 
   async function createOwnQuiz(event) {
     event.preventDefault()
+    if (!creatorName.trim()) {
+      setFormError('Display name is required.')
+      return
+    }
     setCreating(true)
     setFormError('')
     try {
@@ -149,8 +153,8 @@ export default function QuizPage() {
                 <p>You’ll get a public link to share and a private dashboard where every consented result appears.</p>
               </div>
               <form className="your-turn-form" onSubmit={createOwnQuiz}>
-                <label htmlFor="result-creator-name">Your display name <span>(optional)</span></label>
-                <input id="result-creator-name" value={creatorName} onChange={(event) => setCreatorName(event.target.value)} maxLength="50" placeholder="e.g. Rafi" autoComplete="name" />
+                <label htmlFor="result-creator-name">Your display name <span>(required)</span></label>
+                <input id="result-creator-name" value={creatorName} onChange={(event) => setCreatorName(event.target.value)} minLength="1" maxLength="50" placeholder="e.g. Rafi" autoComplete="name" required />
                 <button className="btn btn-primary btn-large btn-full" disabled={creating}>{creating ? <><span className="button-spinner" /> Creating…</> : <>Create my link <ArrowIcon /></>}</button>
                 <small>No signup · Your dashboard link appears immediately</small>
               </form>
