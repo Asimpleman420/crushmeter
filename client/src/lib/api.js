@@ -37,7 +37,7 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-  createQuiz: (creatorDisplayName = '') => request('/api/quizzes', {
+  createQuiz: (creatorDisplayName) => request('/api/quizzes', {
     method: 'POST',
     body: JSON.stringify({ creatorDisplayName }),
   }),

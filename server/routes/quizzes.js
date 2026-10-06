@@ -1,7 +1,7 @@
 import express from 'express';
 import { Quiz } from '../models/Quiz.js';
 import { Submission } from '../models/Submission.js';
-import { calculateScore, hashToken, randomId, rateLimit } from '../lib/security.js';
+import { calculateScore, hashToken, normalizeName, randomId, rateLimit } from '../lib/security.js';
 import { createQuizSchema, parseBody, submissionSchema } from '../lib/validation.js';
 
 const router = express.Router();
@@ -32,6 +32,10 @@ function appUrl() {
   return 'http://localhost:5173';
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 router.post('/', rateLimit({ windowMs: 60 * 60 * 1000, limit: 20, keyPrefix: 'create' }), async (req, res) => {
   const parsed = parseBody(createQuizSchema, req.body);
   if (parsed.error) return res.status(400).json(parsed);
@@ -41,14 +45,35 @@ router.post('/', rateLimit({ windowMs: 60 * 60 * 1000, limit: 20, keyPrefix: 'cr
     return res.status(503).json({ error: 'The app URL is not configured. Please contact the site owner.' });
   }
 
+  const creatorNameKey = normalizeName(parsed.data.creatorDisplayName);
+  const existingQuiz = await Quiz.exists({
+    expiresAt: { $gt: new Date() },
+    $or: [
+      { creatorNameKey },
+      { creatorDisplayName: { $regex: `^${escapeRegExp(parsed.data.creatorDisplayName)}$`, $options: 'i' } },
+    ],
+  });
+  if (existingQuiz) {
+    return res.status(409).json({ error: 'This display name already has an active quiz. Please choose another name.' });
+  }
+
   const managementToken = randomId(32);
   const expiresAt = new Date(Date.now() + THIRTY_DAYS);
-  const quiz = await Quiz.create({
-    publicId: randomId(12),
-    managementTokenHash: hashToken(managementToken),
-    creatorDisplayName: parsed.data.creatorDisplayName,
-    expiresAt,
-  });
+  let quiz;
+  try {
+    quiz = await Quiz.create({
+      publicId: randomId(12),
+      managementTokenHash: hashToken(managementToken),
+      creatorDisplayName: parsed.data.creatorDisplayName,
+      creatorNameKey,
+      expiresAt,
+    });
+  } catch (error) {
+    if (error?.code === 11000 && error?.keyPattern?.creatorNameKey) {
+      return res.status(409).json({ error: 'This display name already has an active quiz. Please choose another name.' });
+    }
+    throw error;
+  }
 
   res.status(201).set('Cache-Control', 'no-store').json({
     publicId: quiz.publicId,

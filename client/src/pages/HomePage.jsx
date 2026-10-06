@@ -19,6 +19,10 @@ export default function HomePage() {
   async function handleCreate(event) {
     event.preventDefault()
     const name = displayName.trim()
+    if (!name) {
+      setError('Display name is required.')
+      return
+    }
     if (name.length > 50) {
       setError('Display name must be 50 characters or fewer.')
       return
@@ -48,9 +52,9 @@ export default function HomePage() {
           <p className="hero-lead">Make a personal quiz link, send it to friends, and collect their playful results—no signup, no awkward account setup.</p>
 
           <form className="create-form" onSubmit={handleCreate} noValidate>
-            <label htmlFor="creator-name">Your display name <span>(optional)</span></label>
+            <label htmlFor="creator-name">Your display name <span>(required)</span></label>
             <div className="create-row">
-              <input id="creator-name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} maxLength="50" placeholder="e.g. Samira" autoComplete="name" />
+              <input id="creator-name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} minLength="1" maxLength="50" placeholder="e.g. Samira" autoComplete="name" required />
               <button className="btn btn-primary btn-large" disabled={creating}>
                 {creating ? <><span className="button-spinner" /> Creating…</> : <>Create your own link <ArrowIcon /></>}
               </button>
@@ -82,7 +86,7 @@ export default function HomePage() {
           <h2 id="how-title">A little fun in three steps</h2>
         </div>
         <div className="steps-grid">
-          <article><span>01</span><div className="step-icon">◇</div><h3>Create your link</h3><p>Add a display name if you like. Your public quiz and private dashboard appear instantly.</p></article>
+          <article><span>01</span><div className="step-icon">◇</div><h3>Create your link</h3><p>Choose a unique display name. Your public quiz and private dashboard appear instantly.</p></article>
           <article><span>02</span><div className="step-icon"><HeartIcon size={25} /></div><h3>Share with friends</h3><p>They enter two names and explicitly agree to share them with you before submitting.</p></article>
           <article><span>03</span><div className="step-icon">⌁</div><h3>See the smiles</h3><p>Open your private dashboard to see results, refresh responses, or delete anything.</p></article>
         </div>

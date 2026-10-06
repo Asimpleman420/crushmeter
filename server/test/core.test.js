@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { after, before, test } from 'node:test';
 import { createApp } from '../app.js';
 import { calculateScore, hashToken } from '../lib/security.js';
-import { parseBody, submissionSchema } from '../lib/validation.js';
+import { createQuizSchema, parseBody, submissionSchema } from '../lib/validation.js';
 import { Quiz } from '../models/Quiz.js';
 import { Submission } from '../models/Submission.js';
 
@@ -13,6 +13,16 @@ test('submission validation requires explicit consent and valid names', () => {
   assert.deepEqual(parseBody(submissionSchema, { visitorName: '  আবির  ', crushName: '  নীলা ', consent: true }).data, {
     visitorName: 'আবির', crushName: 'নীলা', consent: true,
   });
+});
+
+test('quiz creation requires a normalized display name and a unique database key', () => {
+  assert.match(parseBody(createQuizSchema, {}).error, /required/i);
+  assert.match(parseBody(createQuizSchema, { creatorDisplayName: '   ' }).error, /required/i);
+  assert.deepEqual(parseBody(createQuizSchema, { creatorDisplayName: '  Mina   Noor ' }).data, {
+    creatorDisplayName: 'Mina Noor',
+  });
+  const nameIndex = Quiz.schema.indexes().find(([fields]) => fields.creatorNameKey === 1);
+  assert.equal(nameIndex?.[1]?.unique, true);
 });
 
 test('scores are deterministic and normalize case, width, and spacing', () => {
@@ -86,6 +96,22 @@ test('public metadata never exposes management credentials', async () => {
 test('private APIs reject missing tokens', async () => {
   const response = await fetch(`${baseUrl}/api/manage/quiz`);
   assert.equal(response.status, 401);
+});
+
+test('quiz creation rejects a display name that already has an active quiz', async () => {
+  const originalExists = Quiz.exists;
+  Quiz.exists = async () => ({ _id: quizId });
+  try {
+    const response = await fetch(`${baseUrl}/api/quizzes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ creatorDisplayName: 'Mina' }),
+    });
+    assert.equal(response.status, 409);
+    assert.match((await response.json()).error, /already has an active quiz/i);
+  } finally {
+    Quiz.exists = originalExists;
+  }
 });
 
 test('response deletion is always scoped to the authorized quiz', async () => {

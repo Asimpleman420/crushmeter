@@ -5,10 +5,7 @@ const cleanString = (max, label) => z.string({ error: `${label} is required.` })
   .pipe(z.string().min(1, `${label} is required.`).max(max, `${label} must be ${max} characters or fewer.`));
 
 export const createQuizSchema = z.object({
-  creatorDisplayName: z.string().max(50, 'Display name must be 50 characters or fewer.')
-    .transform((value) => value.trim().replace(/\s+/gu, ' '))
-    .optional()
-    .default(''),
+  creatorDisplayName: cleanString(50, 'Display name'),
 }).strict();
 
 export const submissionSchema = z.object({
