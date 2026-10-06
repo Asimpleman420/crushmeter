@@ -114,7 +114,7 @@ export default function QuizPage() {
             <div className="heart-divider"><span /><HeartIcon filled size={17} /><span /></div>
             <div className="field"><label htmlFor="crush-name">Your crush’s name</label><input id="crush-name" value={crushName} onChange={(event) => setCrushName(event.target.value)} maxLength="60" autoComplete="off" placeholder="Enter their name" /></div>
 
-            <label className="consent-row compact-consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /><span className="custom-check" /><span><strong>Are you ready?</strong> Your submitted names will be shared with the link’s creator.</span></label>
+            <label className="consent-row compact-consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /><span className="custom-check" /><span><strong>Are you ready!</strong></span></label>
             {formError && <p className="form-error" role="alert">{formError}</p>}
             <button className="btn btn-primary btn-full btn-large" disabled={submitting}>{submitting ? <><span className="button-spinner" /> Saving your answer…</> : <>Reveal my result <HeartIcon filled size={18} /></>}</button>
           </form>
