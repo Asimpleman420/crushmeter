@@ -17,7 +17,6 @@ export default function Layout() {
           </Link>
           <nav aria-label="Main navigation">
             <Link to="/">Create a quiz</Link>
-            <Link to="/privacy">Privacy</Link>
           </nav>
         </div>
       </header>
@@ -25,7 +24,6 @@ export default function Layout() {
       <footer className="site-footer">
         <div className="site-width footer-inner">
           <span>Made for smiles, not science.</span>
-          <Link to="/privacy">Privacy & retention</Link>
         </div>
       </footer>
       {isPrivate && <meta name="robots" content="noindex, nofollow, noarchive" />}
