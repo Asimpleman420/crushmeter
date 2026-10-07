@@ -121,13 +121,6 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
 .private-link-card:hover .private-value, .private-value:focus { filter: none; user-select: text; }
 .device-note { margin: 18px 0 0; color: #7c6679; font-size: .74rem; line-height: 1.55; }
 .success-panel-compact { margin: 24px 0 0; padding: 26px; }
-.saved-dashboard-panel { margin-bottom: 70px; padding: 24px 26px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; border: 1px solid #ded1e9; border-radius: 22px; background: linear-gradient(135deg, rgba(247,242,252,.92), rgba(255,248,250,.92)); box-shadow: var(--shadow-soft); }
-.saved-dashboard-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; background: white; color: var(--berry); box-shadow: 0 7px 18px rgba(74,32,67,.08); }
-.saved-dashboard-copy { min-width: 0; }
-.saved-dashboard-copy h2 { margin: 0 0 9px; font-family: Georgia, serif; font-size: 1.25rem; font-weight: 500; }
-.saved-dashboard-url { max-width: 560px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #745d71; font: 500 .72rem ui-monospace, SFMono-Regular, Menlo, monospace; }
-.saved-dashboard-copy .toast-slot { height: 0; margin: 4px 0 0; text-align: left; }
-.saved-dashboard-actions { display: flex; gap: 9px; }
 
 .how-section { padding-block: 80px; }
 .section-heading { text-align: center; margin-bottom: 38px; }
@@ -314,9 +307,6 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
   .result-actions { flex-direction: column; }
   .result-actions .btn { width: 100%; }
   .success-panel-compact { margin-top: 18px; }
-  .saved-dashboard-panel { margin-bottom: 45px; padding: 20px 17px; grid-template-columns: auto 1fr; align-items: start; }
-  .saved-dashboard-actions { grid-column: 1 / -1; width: 100%; }
-  .saved-dashboard-actions .btn { flex: 1; }
   .your-turn-card { padding: 23px 18px; grid-template-columns: 1fr; gap: 22px; }
   .your-turn-copy { text-align: center; }
   .your-turn-copy h2 { font-size: 1.45rem; }

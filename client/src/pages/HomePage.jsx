@@ -1,18 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import LinkSuccess from '../components/LinkSuccess.jsx'
-import { ArrowIcon, CopyIcon, HeartIcon } from '../components/Icons.jsx'
+import { ArrowIcon, HeartIcon } from '../components/Icons.jsx'
 import { api } from '../lib/api.js'
-import { copyText, getSavedLinks, saveCreatedLink } from '../lib/links.js'
-
-function latestActiveLink() {
-  return getSavedLinks().find((item) => !item.expiresAt || new Date(item.expiresAt) > new Date()) || null
-}
+import { saveCreatedLink } from '../lib/links.js'
 
 export default function HomePage() {
   const [displayName, setDisplayName] = useState('')
   const [createdQuiz, setCreatedQuiz] = useState(null)
-  const [savedDashboard, setSavedDashboard] = useState(latestActiveLink)
-  const [dashboardNotice, setDashboardNotice] = useState('')
   const [error, setError] = useState('')
   const [creating, setCreating] = useState(false)
   const successRef = useRef(null)
@@ -39,22 +33,11 @@ export default function HomePage() {
       const quiz = await api.createQuiz(name)
       saveCreatedLink(quiz)
       setCreatedQuiz(quiz)
-      setSavedDashboard(quiz)
       window.setTimeout(() => successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
     } catch (requestError) {
       setError(requestError.message)
     } finally {
       setCreating(false)
-    }
-  }
-
-  async function copyDashboardLink() {
-    try {
-      await copyText(savedDashboard.managementUrl)
-      setDashboardNotice('Dashboard link copied!')
-      window.setTimeout(() => setDashboardNotice(''), 2400)
-    } catch {
-      setDashboardNotice('Could not copy. Please select the link manually.')
     }
   }
 
@@ -94,22 +77,6 @@ export default function HomePage() {
       </section>
 
       {createdQuiz && <div className="site-width success-wrap" ref={successRef}><LinkSuccess quiz={createdQuiz} /></div>}
-
-      {!createdQuiz && savedDashboard && (
-        <section className="saved-dashboard-panel site-width" aria-labelledby="saved-dashboard-title">
-          <div className="saved-dashboard-icon"><HeartIcon filled size={22} /></div>
-          <div className="saved-dashboard-copy">
-            <p className="eyebrow">Your private link</p>
-            <h2 id="saved-dashboard-title">Save this for your dashboard and don’t share it.</h2>
-            <div className="saved-dashboard-url" title={savedDashboard.managementUrl}>{savedDashboard.managementUrl}</div>
-            <div className="toast-slot" aria-live="polite">{dashboardNotice}</div>
-          </div>
-          <div className="saved-dashboard-actions">
-            <button className="btn btn-secondary" onClick={copyDashboardLink}><CopyIcon /> Copy link</button>
-            <a className="btn btn-dark" href={savedDashboard.managementUrl}>Open dashboard</a>
-          </div>
-        </section>
-      )}
 
       <section className="how-section site-width" aria-labelledby="how-title">
         <div className="section-heading">
