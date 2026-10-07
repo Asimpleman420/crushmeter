@@ -166,7 +166,6 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
 .consent-row input:checked + .custom-check { border-color: var(--berry); background: var(--berry); }
 .consent-row input:checked + .custom-check::after { content: "✓"; color: white; font-size: .75rem; font-weight: 900; }
 .consent-row input:focus-visible + .custom-check { outline: 3px solid rgba(196,58,104,.22); outline-offset: 2px; }
-.quiz-after-note { max-width: 430px; margin: 14px auto 0; color: #80687c; text-align: center; font-size: .73rem; line-height: 1.55; }
 .quiz-home-link { width: fit-content; margin: 26px auto 0; display: flex; align-items: center; gap: 8px; color: #81667d; font-size: .79rem; font-weight: 700; }
 .quiz-home-link svg { transform: rotate(180deg); }
 
