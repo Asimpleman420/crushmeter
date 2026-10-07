@@ -30,7 +30,7 @@ export default function LinkSuccess({ quiz, compact = false }) {
         <div className="link-card public-link-card">
           <div><span className="number-badge">1</span><span className="link-label">Public quiz link</span></div>
           <p>Send this one to friends.</p>
-          <div className="link-value" title={quiz.publicUrl}>{quiz.publicUrl}</div>
+          <a className="link-value link-value-anchor" href={quiz.publicUrl} target="_blank" rel="noopener noreferrer" title={quiz.publicUrl}>{quiz.publicUrl}</a>
           <div className="button-row">
             <button className="btn btn-secondary" onClick={() => act(() => copyText(quiz.publicUrl), 'Quiz link copied!')}><CopyIcon /> Copy link</button>
             <button className="btn btn-primary" onClick={() => act(() => shareQuiz(quiz.publicUrl), 'Quiz link ready to share!')}><ShareIcon /> Share</button>
@@ -40,10 +40,10 @@ export default function LinkSuccess({ quiz, compact = false }) {
         <div className="link-card private-link-card">
           <div><span className="number-badge">2</span><span className="link-label">Private dashboard link</span></div>
           <p className="private-link-warning"><strong>Save this one-time link somewhere safe and don’t share it.</strong><span>Use it to secretly find out who your friends’ crushes are.</span></p>
-          <div className="link-value private-value" title={quiz.managementUrl}>{quiz.managementUrl}</div>
+          <a className="link-value link-value-anchor private-value" href={quiz.managementUrl} target="_blank" rel="noopener noreferrer" title={quiz.managementUrl}>{quiz.managementUrl}</a>
           <div className="button-row">
             <button className="btn btn-secondary" onClick={() => act(() => copyText(quiz.managementUrl), 'Dashboard link copied!')}><CopyIcon /> Copy dashboard</button>
-            <a className="btn btn-dark" href={quiz.managementUrl}>Open dashboard</a>
+            <a className="btn btn-dark" href={quiz.managementUrl} target="_blank" rel="noopener noreferrer">Open dashboard</a>
           </div>
         </div>
       </div>

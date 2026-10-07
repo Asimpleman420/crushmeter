@@ -120,6 +120,8 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
 .private-link-warning strong { display: block; margin-bottom: 3px; color: var(--plum); font-size: .84rem; font-weight: 850; }
 .private-link-warning span { display: block; line-height: 1.45; }
 .link-value { margin-bottom: 16px; padding: 12px 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: 11px; background: rgba(255,255,255,.78); border: 1px solid rgba(70,29,64,.08); color: #6e536a; font: 500 .75rem ui-monospace, SFMono-Regular, Menlo, monospace; }
+.link-value-anchor { display: block; width: 100%; cursor: pointer; touch-action: manipulation; }
+.link-value-anchor:hover { border-color: rgba(196,58,104,.32); color: var(--berry-dark); }
 .private-value { filter: blur(3.5px); transition: filter .2s ease; user-select: none; }
 .private-link-card:hover .private-value, .private-value:focus { filter: none; user-select: text; }
 .device-note { margin: 18px 0 0; color: #7c6679; font-size: .74rem; line-height: 1.55; }
@@ -215,7 +217,7 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
 .stat-card small { color: #998596; font-size: .67rem; }
 .share-card { min-width: 0; display: flex; align-items: center; gap: 24px; }
 .share-card > div:first-child { min-width: 0; flex: 1; }
-.share-url { margin-top: 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--berry-dark); font: 550 .77rem ui-monospace, monospace; }
+.share-url { margin-top: 7px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--berry-dark); font: 550 .77rem ui-monospace, monospace; touch-action: manipulation; }
 .responses-section { border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.76); overflow: hidden; }
 .responses-title { padding: 22px 24px 18px; display: flex; align-items: end; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .responses-title h2 { margin: 0; font-family: Georgia, serif; font-size: 1.65rem; font-weight: 500; }
@@ -294,6 +296,7 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
   .success-heading h2 { font-size: 1.4rem; }
   .success-heading p:last-child { font-size: .8rem; line-height: 1.5; }
   .link-card { padding: 18px 15px; }
+  .link-value-anchor { min-height: 46px; display: flex; align-items: center; }
   .link-card .button-row .btn { flex: 1; padding-inline: 10px; }
   .how-section { padding-block: 55px; }
   .steps-grid { gap: 12px; }
@@ -340,6 +343,10 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
   .danger-zone { align-items: flex-start; flex-direction: column; }
   .danger-zone .btn { width: 100%; }
   .footer-inner { flex-direction: column; justify-content: center; gap: 9px; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .private-value { filter: none; user-select: text; }
 }
 
 @media (max-width: 390px) {

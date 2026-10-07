@@ -111,7 +111,7 @@ export default function DashboardPage() {
 
       <section className="dashboard-stats">
         <div className="stat-card"><span>Total responses</span><strong>{quiz.submissionCount}</strong><small>All playful matches</small></div>
-        <div className="share-card"><div><span>Public quiz link</span><div className="share-url">{publicUrl}</div></div><div className="button-row"><button className="btn btn-secondary btn-small" onClick={runCopy}><CopyIcon /> Copy</button><button className="btn btn-primary btn-small" onClick={runShare}><ShareIcon /> Share</button></div></div>
+        <div className="share-card"><div><span>Public quiz link</span><a className="share-url" href={publicUrl} target="_blank" rel="noopener noreferrer">{publicUrl}</a></div><div className="button-row"><button className="btn btn-secondary btn-small" onClick={runCopy}><CopyIcon /> Copy</button><button className="btn btn-primary btn-small" onClick={runShare}><ShareIcon /> Share</button></div></div>
       </section>
 
       <section className="responses-section" aria-labelledby="responses-title">
