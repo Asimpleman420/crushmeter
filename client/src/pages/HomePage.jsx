@@ -2,12 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import LinkSuccess from '../components/LinkSuccess.jsx'
 import { ArrowIcon, HeartIcon } from '../components/Icons.jsx'
 import { api } from '../lib/api.js'
-import { formatDate, getSavedLinks, saveCreatedLink } from '../lib/links.js'
+import { saveCreatedLink } from '../lib/links.js'
 
 export default function HomePage() {
   const [displayName, setDisplayName] = useState('')
   const [createdQuiz, setCreatedQuiz] = useState(null)
-  const [savedLinks, setSavedLinks] = useState(() => getSavedLinks())
   const [error, setError] = useState('')
   const [creating, setCreating] = useState(false)
   const successRef = useRef(null)
@@ -34,7 +33,6 @@ export default function HomePage() {
       const quiz = await api.createQuiz(name)
       saveCreatedLink(quiz)
       setCreatedQuiz(quiz)
-      setSavedLinks(getSavedLinks())
       window.setTimeout(() => successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
     } catch (requestError) {
       setError(requestError.message)
@@ -92,28 +90,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {savedLinks.length > 0 && (
-        <section className="saved-section site-width" aria-labelledby="saved-title">
-          <div className="section-heading inline-heading">
-            <div><p className="eyebrow">Browser storage</p><h2 id="saved-title">My links on this device</h2></div>
-            <p>Available only in this browser. There is no account-based recovery.</p>
-          </div>
-          <div className="saved-list">
-            {savedLinks.map((item) => (
-              <article className="saved-card" key={item.publicId}>
-                <div className="saved-icon"><HeartIcon filled size={20} /></div>
-                <div className="saved-info"><strong>{item.creatorDisplayName ? `${item.creatorDisplayName}’s quiz` : 'My CrushMeter quiz'}</strong><span>Created {formatDate(item.createdAt)}</span></div>
-                <div className="saved-actions"><a className="text-link" href={item.publicUrl}>Open quiz</a><a className="btn btn-secondary btn-small" href={item.managementUrl}>Dashboard</a></div>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className="fun-note site-width">
-        <HeartIcon size={22} />
-        <div><strong>A gentle reminder</strong><p>Every percentage is generated for entertainment. CrushMeter cannot measure anybody’s real feelings.</p></div>
-      </section>
     </>
   )
 }
