@@ -118,6 +118,7 @@ export default function QuizPage() {
             <label className="consent-row compact-consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /><span className="custom-check" /><span><strong>Are you ready!</strong></span></label>
             {formError && <p className="form-error" role="alert">{formError}</p>}
             <button className="btn btn-primary btn-full btn-large" disabled={submitting}>{submitting ? <><span className="button-spinner" /> Saving your answer…</> : <>Reveal my result <HeartIcon filled size={18} /></>}</button>
+            <p className="quiz-after-note">After revealing your result, you can create your own link, share it with friends, and discover their secret crushes.</p>
           </form>
         </section>
       ) : (
