@@ -8,7 +8,6 @@ import { saveCreatedLink, shareQuiz } from '../lib/links.js'
 
 export default function QuizPage() {
   const { publicId } = useParams()
-  const [quiz, setQuiz] = useState(null)
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState('')
   const [visitorName, setVisitorName] = useState('')
@@ -27,7 +26,6 @@ export default function QuizPage() {
     setLoadError('')
     try {
       const value = await api.getQuiz(publicId)
-      setQuiz(value)
       document.title = `${value.creatorDisplayName ? `${value.creatorDisplayName}’s` : 'A'} CrushMeter quiz`
     } catch (error) {
       setLoadError(error.message)
@@ -41,7 +39,6 @@ export default function QuizPage() {
     api.getQuiz(publicId)
       .then((value) => {
         if (!active) return
-        setQuiz(value)
         document.title = `${value.creatorDisplayName ? `${value.creatorDisplayName}’s` : 'A'} CrushMeter quiz`
       })
       .catch((error) => { if (active) setLoadError(error.message) })
@@ -136,7 +133,7 @@ export default function QuizPage() {
             <p className="result-disclaimer">Entertainment only</p>
             <div className="sender-knows-notice" role="status">
               <span aria-hidden="true">😄</span>
-              <p><strong>Ahaa! {quiz.creatorDisplayName || 'The sender'} knows who your crush is now.</strong>Your names and this result are now in their private dashboard.</p>
+              <p><strong>Ahaa! Your friend knows who your crush is now.</strong>Your names and this result are now in their private dashboard.</p>
             </div>
             <div className="result-actions">
               <button className="btn btn-secondary" onClick={handleShare}><ShareIcon /> Share this quiz</button>
