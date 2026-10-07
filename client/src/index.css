@@ -116,6 +116,9 @@ input:focus { border-color: var(--berry); box-shadow: 0 0 0 4px rgba(196,58,104,
 .number-badge { width: 25px; height: 25px; margin-right: 9px; display: inline-grid; place-items: center; border-radius: 8px; background: white; font-size: .7rem; font-weight: 850; }
 .link-label { font-size: .86rem; font-weight: 850; }
 .link-card > p { margin: 8px 0 15px; color: var(--plum-soft); font-size: .77rem; }
+.private-link-warning { padding: 11px 13px; border-left: 3px solid var(--berry); border-radius: 8px; background: rgba(255,255,255,.7); }
+.private-link-warning strong { display: block; margin-bottom: 3px; color: var(--plum); font-size: .84rem; font-weight: 850; }
+.private-link-warning span { display: block; line-height: 1.45; }
 .link-value { margin-bottom: 16px; padding: 12px 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: 11px; background: rgba(255,255,255,.78); border: 1px solid rgba(70,29,64,.08); color: #6e536a; font: 500 .75rem ui-monospace, SFMono-Regular, Menlo, monospace; }
 .private-value { filter: blur(3.5px); transition: filter .2s ease; user-select: none; }
 .private-link-card:hover .private-value, .private-value:focus { filter: none; user-select: text; }

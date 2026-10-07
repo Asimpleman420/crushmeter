@@ -39,7 +39,7 @@ export default function LinkSuccess({ quiz, compact = false }) {
 
         <div className="link-card private-link-card">
           <div><span className="number-badge">2</span><span className="link-label">Private dashboard link</span></div>
-          <p>Save this one-time link somewhere safe and don’t share it. Use it to secretly find out who your friends’ crushes are.</p>
+          <p className="private-link-warning"><strong>Save this one-time link somewhere safe and don’t share it.</strong><span>Use it to secretly find out who your friends’ crushes are.</span></p>
           <div className="link-value private-value" title={quiz.managementUrl}>{quiz.managementUrl}</div>
           <div className="button-row">
             <button className="btn btn-secondary" onClick={() => act(() => copyText(quiz.managementUrl), 'Dashboard link copied!')}><CopyIcon /> Copy dashboard</button>
